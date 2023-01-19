@@ -1,0 +1,23 @@
+{% for challenge in challenges %}
+
+<h1>Challenge No.{{ challenge.id }}</h1>
+
+<br>
+
+{{ challenge.title }}
+
+<br>
+<br>
+
+{{ challenge.text }}
+
+{% endfor %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
+{{ message }}
+
