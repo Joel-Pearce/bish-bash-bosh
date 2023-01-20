@@ -11,17 +11,14 @@ def Challenge(request, challenge_id):
         return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': InputForm()})
     else:
         form = InputForm(request.POST)
-        message = assign_challenge(form.data['challenge_input'], challenge_id)
-        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': form, 'message': message})
+        result, message = assign_challenge(form.data['challenge_input'], challenge_id)
+        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': form, 'message': message, 'result': result})
+    
+    
 
 
 
-def assign_challenge(input, no):
-    match no:
-        case 1:
-            return challenge1(input)
-        case 2:
-            return challenge2(input)
+
 
 
 
