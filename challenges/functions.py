@@ -1,16 +1,32 @@
 import subprocess
 import os
 
-def challenge1_tests(script_string):
-    file_path = 'challenges/code_submissions/challenge1.sh'
-    f = open(file_path, 'w')
-    f.write(script_string)
-    f.close()
-    os.chmod(file_path, 0o0777)
-    result = subprocess.check_output('bash challenge1.sh', cwd='/home/joely/django_projects/bish_bash_bosh/challenges/code_submissions', shell=True)
-    if str(result) == "b\'Hello World!\\n\'":
-        message = "Correct :)"
-    else:
-        message = "Unfortunately, your script did not return the desired answer."
 
+def challenge1(script_string):
+    try:
+        result = subprocess.check_output(script_string, shell=True)
+        message = assess_call(result, "Hello World!")
+    except:
+        message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     return message
+
+
+def challenge2(script_string):
+    print(script_string)
+    try:
+        result = subprocess.check_output(script_string, shell=True)
+        message = assess_call(result, "Hello World!")
+    except:
+        message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    return message
+
+
+def assess_call(input, expected_output):
+    if str(input)[2:-3] == expected_output:
+        return "Correct :)"
+    else:
+        return "Unfortunately, your script did not return the desired answer."
+
+
+
+

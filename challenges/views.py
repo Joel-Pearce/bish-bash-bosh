@@ -1,18 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Challenges
 from .forms import InputForm
-from .functions import challenge1_tests
+from .functions import *
 import os
 
 
-def Challenge(request):
-    challenges = Challenges.objects.all()
+def Challenge(request, challenge_id):
+    challenge = get_object_or_404(Challenges, pk=challenge_id)
     if request.method == 'GET':
-        return render(request, 'challenges/challenge.html', {'challenges': challenges, 'form': InputForm()})
+        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': InputForm()})
     else:
         form = InputForm(request.POST)
-        message = challenge1_tests(form.data['challenge_input'])
-        return render(request, 'challenges/challenge.html', {'challenges': challenges, 'form': form, 'message': message})
+        message = assign_challenge(form.data['challenge_input'], challenge_id)
+        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': form, 'message': message})
+
+
+
+def assign_challenge(input, no):
+    match no:
+        case 1:
+            return challenge1(input)
+        case 2:
+            return challenge2(input)
+
+
 
 
     
