@@ -3,45 +3,66 @@ from django.test import TestCase
 from .functions import *
 
 
-class Challenge1Tests(TestCase):
+class print_string_challengeTests(TestCase):
 
     def test_if_correct_answer_is_given(self):
         answer = '''#!/bin/bash
                             echo "Hello World!"'''
-        result, message = challenge1(answer)
+        result, message = print_string_challenge(answer)
         self.assertEqual("Hello World!", result)
 
     def test_if_incorrect_answer_is_given(self):
         answer = '''#!/bin/bash
                             echo "Hello World"'''
-        result, message = challenge1(answer)
+        result, message = print_string_challenge(answer)
         self.assertNotEqual("Hello World!", result)
 
     def test_if_gibberish_answer_is_given(self):
         answer = '''regtregrdgdfgdfgfdg'''
-        result, message = challenge1(answer)
+        result, message = print_string_challenge(answer)
         self.assertNotEqual("Hello World!", result)
 
 
 
-class Challenge2Tests(TestCase):
+class set_variable_challengeTests(TestCase):
 
     def test_if_correct_answer_is_given(self):
         answer = '''#!/bin/bash
                             my_variable="Hello World!"'''
-        result, message = challenge2(answer)
+        result, message = set_variable_challenge(answer)
         self.assertEqual("Hello World!", result)
 
     def test_if_incorrect_answer_is_given(self):
         answer = '''#!/bin/bash
                             echo "Hello World!"'''
-        result, message = challenge2(answer)
+        result, message = set_variable_challenge(answer)
         self.assertNotEqual("Hello World!", result)
 
     def test_if_gibberish_answer_is_given(self):
         answer = '''regtregrdgdfgdfgfdg'''
-        result, message = challenge2(answer)
+        result, message = set_variable_challenge(answer)
         self.assertNotEqual("Hello World!", result)
+
+
+class multiplication_challengeTests(TestCase):
+
+    def test_if_correct_answer_is_given(self):
+        answer = '''#!/bin/bash
+                            my_variable="Hello World!"'''
+        result, message = set_variable_challenge(answer)
+        self.assertEqual("Hello World!", result)
+
+    def test_if_incorrect_answer_is_given(self):
+        answer = '''#!/bin/bash
+                            echo "Hello World!"'''
+        result, message = set_variable_challenge(answer)
+        self.assertNotEqual("Hello World!", result)
+
+    def test_if_gibberish_answer_is_given(self):
+        answer = '''regtregrdgdfgdfgfdg'''
+        result, message = set_variable_challenge(answer)
+        self.assertNotEqual("Hello World!", result)
+
 
 
 
