@@ -46,22 +46,33 @@ class set_variable_challengeTests(TestCase):
 
 class multiplication_challengeTests(TestCase):
 
-    def test_if_correct_answer_is_given(self):
-        answer = '''#!/bin/bash
-                            my_variable="Hello World!"'''
-        result, message = set_variable_challenge(answer)
-        self.assertEqual("Hello World!", result)
+    def test_multiplication_challenge(self):
+        script_string = '#!/bin/bash\necho $(($1 * $2))'
+        result, message = multiplication_challenge(script_string)
+        assert message == "Correct :)"
 
-    def test_if_incorrect_answer_is_given(self):
-        answer = '''#!/bin/bash
-                            echo "Hello World!"'''
-        result, message = set_variable_challenge(answer)
-        self.assertNotEqual("Hello World!", result)
 
-    def test_if_gibberish_answer_is_given(self):
-        answer = '''regtregrdgdfgdfgfdg'''
-        result, message = set_variable_challenge(answer)
-        self.assertNotEqual("Hello World!", result)
+    def test_multiplication_challenge_incorrect_output(self):
+        script_string = '#!/bin/bash\necho $(($1 * $2))'
+        result, message = multiplication_challenge(script_string)
+        assert message == "Unfortunately, your script did not return the desired answer."
+
+    def test_multiplication_challenge_with_syntax_error(self):
+        script_string = '#!/bin/bash\necho $1 * $2'
+        result, message = multiplication_challenge(script_string)
+        assert message == "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+
+
+    def test_multiplication_challenge_with_multiple_inputs(self):
+        script_string = '#!/bin/bash\necho $(($1 * $2))'
+        result, message = multiplication_challenge(script_string)
+        assert message == "Correct :)"
+
+
+    def test_multiplication_challenge_with_multiple_incorrect_outputs(self):
+        script_string = '#!/bin/bash\necho $(($1 * $2))'
+        result, message = multiplication_challenge(script_string)
+        assert message == "Unfortunately, your script did not return the desired answer."
 
 
 

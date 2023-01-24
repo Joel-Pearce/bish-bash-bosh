@@ -28,14 +28,77 @@ def multiplication_challenge(script_string):
     result = ""
     file_path = "multiplication.sh"
     create_code_submission(file_path, script_string)
-    try:
-        result = subprocess.check_output(shlex.split('bash ' + file_path + ' 2 7'))
-        print(result)
-        message = assess_call(result, "14")
-    except Exception as e:
-        print(e)
-        message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+
+    test_inputs = [(2, 3, 6), (4, 5, 20), (6, 7, 42)]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     return str(result)[2:-3], message
+
+
+def addition_challenge(script_string):
+    result = ""
+    file_path = "multiplication.sh"
+    create_code_submission(file_path, script_string)
+
+    test_inputs = [(2, 3, 5), (4, 5, 9), (6, 7, 13)]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    return str(result)[2:-3], message
+
+
+def substraction_challenge(script_string):
+    result = ""
+    file_path = "multiplication.sh"
+    create_code_submission(file_path, script_string)
+
+    test_inputs = [(2, 3, -1), (4, 5, -1), (6, 7, -1)]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    return str(result)[2:-3], message
+
+
+def division_challenge(script_string):
+    result = ""
+    file_path = "multiplication.sh"
+    create_code_submission(file_path, script_string)
+
+    test_inputs = [(10, 2, 5), (10, 5, 2), (100, 10, 10)]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    return str(result)[2:-3], message
+
 
 
 def assess_call(input, expected_output):
