@@ -20,3 +20,12 @@
 <br>
 
 {{ message }}
+
+<br>
+<br>
+
+{% if message == 'Correct :)' %}
+<a href="{% url 'challenge' 1 %}">
+    <button>next</button>
+</a>
+{% endif %}
