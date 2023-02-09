@@ -1,4 +1,3 @@
-
 <h1>Challenge No.{{ challenge.id }}</h1>
 
 <br>
@@ -25,7 +24,19 @@
 <br>
 
 {% if message == 'Correct :)' %}
-<a href="{% url 'challenge' 1 %}">
+{% if challenge.next_id != 0 %}
+<a href="{% url 'challenge' challenge.next_id %}">
+    <button>next</button>
+</a>
+{% else %}
+<a href="{% url 'success' %}">
     <button>next</button>
 </a>
 {% endif %}
+{% endif %}
+
+<br>
+<br>
+<a href="{% url 'home' %}">
+    <button>Home</button>
+</a>

@@ -2,7 +2,7 @@ import subprocess
 import os
 import shlex
 
-
+# tests script by comparing output to ensure is "Hello World!"
 def print_string_challenge(script_string):
     result = ""
     try:
@@ -12,7 +12,7 @@ def print_string_challenge(script_string):
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     return message
 
-
+# tests script by echoing the variable 'my_variable' to ensure is "Hello World!"
 def set_variable_challenge(script_string):
     result = ""
     script_string += "\necho $my_variable"
@@ -23,7 +23,7 @@ def set_variable_challenge(script_string):
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     return message
 
-
+# range of inputs and outputs to test challenge, will break if script incorrect
 def multiplication_challenge(script_string):
     result = ""
     file_path = "multiplication.sh"
@@ -104,15 +104,18 @@ def division_challenge(script_string):
     return message
 
 
-
+# the return value from check_output needs to be trimmed; this method trims it and ensures it matches with expected output
 def assess_call(input, expected_output):
-    print(str(input)[2:-5])
-    if str(input)[2:-5] == str(expected_output):
+    if str(input)[-5:] == "\\r\\n\'":
+        input = str(input)[2:-5]
+    else:
+        input = str(input)[2:-3]
+    if input == str(expected_output):
         return "Correct :)"
     else:
         return "Unfortunately, your script did not return the desired answer."
 
-
+# return correct challenge no.
 def assign_challenge(input, no):
     match no:
         case 1:
@@ -128,7 +131,7 @@ def assign_challenge(input, no):
         case 6:
             return division_challenge(input)
 
-
+# create file with code submission that will later be called by check_output method
 def create_code_submission(file_path, file_contents):
     with open(file_path, "w") as f:
         f.write(file_contents)
