@@ -1,19 +1,52 @@
-<h1>Challenge No.{{ challenge.id }}</h1>
+{% extends 'challenges/base.html' %}
 
-<br>
+{% block content %}
 
-{{ challenge.title }}
+<div class="container">
 
-<br>
-<br>
+    <div class="row">
 
-{{ challenge.text }}
+        <div class="col-4">
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+            <div class="card" style="height: 25rem;">
+
+                <h1>Challenge No.{{ challenge.id }}</h1>
+
+                <hr>
+
+                <br>
+
+                <i>{{ challenge.title }}</i>
+
+                <br>
+
+                <br>
+
+                <p>                    </p>
+
+                <br>
+
+                {{ challenge.text }}
+
+            </div>
+
+        </div>
+
+        <div class="col-8">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        
+        </div>
+
+    </div>
+
+</div>
+
 
 <br>
 <br>
@@ -37,6 +70,4 @@
 
 <br>
 <br>
-<a href="{% url 'home' %}">
-    <button>Home</button>
-</a>
+{% endblock %}
