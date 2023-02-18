@@ -92,10 +92,12 @@
 
         <div class="col">
 
-            <div class="card text-white bg-secondary mb-3" style="height: 5rem;">
+            <div class="card text-white bg-secondary mb-3" style="height: 7.5rem; width: 30rem;">
                 <div class="card-body">
                     <h5 class="card-title">Where you went wrong</h5>
-                    <p>{{ results }}</p>
+                    {% for key, value in results.items %}
+                    <p>{{key}} : {{ value }}</p>
+                    {% endfor %}
                   </div>
             </div>
 
@@ -103,21 +105,25 @@
 
         {% endif %}
 
-        {% if message == 'Correct :)' %}
-        {% if challenge.next_id != 0 %}
-        <a href="{% url 'challenge' challenge.next_id %}">
-            <button>next</button>
-        </a>
+        <div class="col text-left">
 
-        {% else %}
-        <a href="{% url 'success' %}">
-            <button>next</button>
-        </a>
-        {% endif %}
-        {% endif %}
+            {% if message == 'Correct :)' %}
+            {% if challenge.next_id != 0 %}
+            <a href="{% url 'challenge' challenge.next_id %}">
+                <button class="btn btn-success btn-circle btn-xl"><h3><b>Next</b></h3></button>
+            </a>
 
-        <br>
-        <br>
+            {% else %}
+            <a href="{% url 'success' %}">
+                <button class="btn-circle">next</button>
+            </a>
+            {% endif %}
+            {% endif %}
+
+            <br>
+            <br>
+
+        </div>
 
     </div>
 
