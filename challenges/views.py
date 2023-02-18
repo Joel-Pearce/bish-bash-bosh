@@ -11,8 +11,8 @@ def Challenge(request, challenge_id):
         return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': InputForm()})
     else:
         form = InputForm(request.POST)
-        message = assign_challenge(form.data['challenge_input'], challenge_id)
-        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': form, 'message': message})
+        message, results = assign_challenge(form.data['challenge_input'], challenge_id)
+        return render(request, 'challenges/challenge.html', {'challenge': challenge, 'form': form, 'message': message, 'results': results})
 
 def Home(request):
     return render(request, 'challenges/home.html')

@@ -6,68 +6,122 @@
 
     <div class="row">
 
-        <div class="col-4">
+        <div class="col">
 
-            <div class="card" style="height: 25rem;">
+            <div class="card" style="height: 30rem; width: 45rem;">
 
-                <h1>Challenge No.{{ challenge.id }}</h1>
+                <div class="card-header">
 
-                <hr>
+                    <h1>Challenge No.{{ challenge.id }}</h1>
 
-                <br>
-
-                <i>{{ challenge.title }}</i>
+                </div>
 
                 <br>
 
-                <br>
-
-                <p>                    </p>
+                <i><p>{{ challenge.title }}</p></i>
 
                 <br>
 
-                {{ challenge.text }}
+                <br>
+
+                <p>{{ challenge.text }}</p>
 
             </div>
 
         </div>
 
-        <div class="col-8">
+        <div class="col">
 
             <form action="" method="post">
                 {% csrf_token %}
                 {{ form }}
                 <br>
-                <input type="submit" value="Submit">
+                <button type="submit">Submit</button>
             </form>
         
         </div>
 
     </div>
 
+    <br>
+
+    <div class="row">
+
+        {% if message == 'Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?' %}
+
+        <div class="col">
+
+            <br>
+            <br>
+
+            <div class="card text-white bg-danger mb-3" style="height: 7.5rem; width: 45rem;">
+                <div class="card-body">
+                    <h5 class="card-title">ERROR</h5>
+                    <p>{{ message }}</p>
+                  </div>
+            </div>
+
+        </div>
+        
+        {% elif message == 'Correct :)' %}
+
+        <div class="col">
+        
+            <div class="card text-white bg-success mb-3" style="height: 7.5rem; width: 45rem;">
+                <div class="card-body">
+                    <h5 class="card-title">SUCCESS</h5>
+                    <p>{{ message }}</p>
+                  </div>
+            </div>
+
+
+        </div>
+
+        {% elif message == 'Unfortunately, your script did not return the desired answer.' %}
+
+        <div class="col">
+
+            <div class="card text-white bg-secondary mb-3" style="height: 5rem; width: 45rem;">
+                <div class="card-body">
+                    <h5 class="card-title">INCORRECT</h5>
+                    <p>{{ message }}</p>
+                  </div>
+            </div>
+
+        </div>
+
+        <div class="col">
+
+            <div class="card text-white bg-secondary mb-3" style="height: 5rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Where you went wrong</h5>
+                    <p>{{ results }}</p>
+                  </div>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        {% if message == 'Correct :)' %}
+        {% if challenge.next_id != 0 %}
+        <a href="{% url 'challenge' challenge.next_id %}">
+            <button>next</button>
+        </a>
+
+        {% else %}
+        <a href="{% url 'success' %}">
+            <button>next</button>
+        </a>
+        {% endif %}
+        {% endif %}
+
+        <br>
+        <br>
+
+    </div>
+
+
 </div>
 
-
-<br>
-<br>
-
-{{ message }}
-
-<br>
-<br>
-
-{% if message == 'Correct :)' %}
-{% if challenge.next_id != 0 %}
-<a href="{% url 'challenge' challenge.next_id %}">
-    <button>next</button>
-</a>
-{% else %}
-<a href="{% url 'success' %}">
-    <button>next</button>
-</a>
-{% endif %}
-{% endif %}
-
-<br>
-<br>
 {% endblock %}

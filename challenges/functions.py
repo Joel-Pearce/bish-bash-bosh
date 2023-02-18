@@ -10,7 +10,8 @@ def print_string_challenge(script_string):
         message = assess_call(result, "Hello World!")
     except:
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
-    return message
+    results = {'Input': '', 'Output': result}
+    return message, results
 
 # tests script by echoing the variable 'my_variable' to ensure is "Hello World!"
 def set_variable_challenge(script_string):
@@ -21,13 +22,15 @@ def set_variable_challenge(script_string):
         message = assess_call(result, "Hello World!")
     except:
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
-    return message
+    results = {'Input': '', 'Output': result}
+    return message, results
 
 # range of inputs and outputs to test challenge, will break if script incorrect
 def multiplication_challenge(script_string):
     result = ""
     file_path = "multiplication.sh"
     create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
 
     test_inputs = [(2, 3, 6), (4, 5, 20), (6, 7, 42)]
 
@@ -36,18 +39,23 @@ def multiplication_challenge(script_string):
             result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
             message = assess_call(result, expected_output)
             if message == "Unfortunately, your script did not return the desired answer.":
+                results['Input'] = str(x) + ', ' + str(y)
+                result['Output'] = result
                 break
         except Exception as e:
             print(e)
             message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     os.remove(file_path)
-    return message
+    results['Input'] = str(x) + ', ' + str(y)
+    result['Output'] = result
+    return message, results
 
 
 def addition_challenge(script_string):
     result = ""
     file_path = "addition.sh"
     create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
 
     test_inputs = [(2, 3, 5), (4, 5, 9), (6, 7, 13)]
 
@@ -61,13 +69,14 @@ def addition_challenge(script_string):
             print(e)
             message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     os.remove(file_path)
-    return message
+    return message, results
 
 
 def subtraction_challenge(script_string):
     result = ""
     file_path = "subtraction.sh"
     create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
 
     test_inputs = [(2, 3, -1), (4, 5, -1), (6, 7, -1)]
 
@@ -81,13 +90,14 @@ def subtraction_challenge(script_string):
             print(e)
             message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     os.remove(file_path)
-    return message
+    return message, results
 
 
 def division_challenge(script_string):
     result = ""
     file_path = "divsion.sh"
     create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
 
     test_inputs = [(10, 2, 5), (10, 5, 2), (100, 10, 10)]
 
@@ -101,7 +111,7 @@ def division_challenge(script_string):
             print(e)
             message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     os.remove(file_path)
-    return message
+    return message, results
 
 
 # the return value from check_output needs to be trimmed; this method trims it and ensures it matches with expected output
