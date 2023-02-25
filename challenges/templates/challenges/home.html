@@ -2,13 +2,26 @@
 
 {% block content %}
 
-<div class="container">
-    
-<p>Welcome to Bish Bash Bosh, a site for honing your bash-scripting skills.</p>
+{% load static %}
 
-<a href="{% url 'challenge' 1 %}">
-    <button>Get Started!</button>
-</a>
+<div class="container">
+
+    <div class="text-center">
+    
+    <h2>Welcome to Bish Bash Bosh, a site for honing your bash-scripting skills.</h2>
+    <hr>
+    <small class="text-muted">
+        <i>
+        <h5>Bash can be difficult to get your head around. The syntax is not always very intuitive</h5>
+        <h5>The best way to learn is by doing, which is why we've created this site: to give you 10 easy challenges to help you on your way to bash mastery.</h5>
+        </i>
+    </small>
+
+    <a href="{% url 'challenge' 1 %}">
+        <img src="{% static 'challenges/get-started-logo(1).png' %}" width="60%"; alt="">
+    </a> 
+
+    </div>
 
 </div>
 

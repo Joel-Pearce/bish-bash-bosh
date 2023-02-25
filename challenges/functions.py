@@ -5,11 +5,15 @@ import shlex
 # tests script by comparing output to ensure is "Hello World!"
 def print_string_challenge(script_string):
     result = ""
+    file_path = "hello_world.sh"
+    create_code_submission(file_path, script_string)
     try:
-        result = subprocess.check_output(script_string, shell=True)
+        subprocess.call('dos2unix ' + file_path, shell=True)
+        result = subprocess.check_output(shlex.split('bash ' + file_path))
         message = assess_call(result, "Hello World!")
     except:
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    os.remove(file_path)
     results = {'Input': 'N/A', 'Output': str(result)[2:-3]}
     return message, results
 
@@ -17,11 +21,15 @@ def print_string_challenge(script_string):
 def set_variable_challenge(script_string):
     result = ""
     script_string += "\necho $my_variable"
+    file_path = "variable.sh"
+    create_code_submission(file_path, script_string)
     try:
-        result = subprocess.check_output(script_string, shell=True)
+        subprocess.call('dos2unix ' + file_path, shell=True)
+        result = subprocess.check_output(shlex.split('bash ' + file_path))
         message = assess_call(result, "Hello World!")
     except:
         message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    os.remove(file_path)
     results = {'Input': '', 'Output': str(result)[2:-3]}
     return message, results
 
@@ -36,6 +44,7 @@ def multiplication_challenge(script_string):
 
     for x, y, expected_output in test_inputs:
         try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
             result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
             message = assess_call(result, expected_output)
             if message == "Unfortunately, your script did not return the desired answer.":
@@ -61,6 +70,7 @@ def addition_challenge(script_string):
 
     for x, y, expected_output in test_inputs:
         try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
             result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
             message = assess_call(result, expected_output)
             if message == "Unfortunately, your script did not return the desired answer.":
@@ -86,6 +96,7 @@ def subtraction_challenge(script_string):
 
     for x, y, expected_output in test_inputs:
         try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
             result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
             message = assess_call(result, expected_output)
             if message == "Unfortunately, your script did not return the desired answer.":
@@ -111,6 +122,7 @@ def division_challenge(script_string):
 
     for x, y, expected_output in test_inputs:
         try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
             result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
             message = assess_call(result, expected_output)
             if message == "Unfortunately, your script did not return the desired answer.":
@@ -122,6 +134,31 @@ def division_challenge(script_string):
             message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
     os.remove(file_path)
     results['Input'] = str(x) + ', ' + str(y)
+    results['Output'] = str(result)[2:-5]
+    return message, results
+
+
+def if_else_challenge(script_string):
+    result = ""
+    file_path = "if_else.sh"
+    create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
+
+    test_inputs = [("14", "You lose"), ("50", "You lose"), ("51", "You win")]
+
+    for x, expected_output in test_inputs:
+        try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                results['Input'] = str(x) 
+                results['Output'] = str(result)[2:-5]
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    results['Input'] = str(x)
     results['Output'] = str(result)[2:-5]
     return message, results
 
@@ -152,6 +189,8 @@ def assign_challenge(input, no):
             return subtraction_challenge(input)
         case 6:
             return division_challenge(input)
+        case 7:
+            return if_else_challenge(input)
 
 # create file with code submission that will later be called by check_output method
 def create_code_submission(file_path, file_contents):
