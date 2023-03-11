@@ -163,6 +163,82 @@ def if_else_challenge(script_string):
     return message, results
 
 
+def concatanation_challenge(script_string):
+    result = ""
+    file_path = "concatanation.sh"
+    create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
+
+    test_inputs = [("Hello", "World!", "Hello World!"), ("Goodbye", "World!", "Goodbye World!"), ("Love", "Life", "Love Life")]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                results['Input'] = str(x) + ', ' + str(y)
+                results['Output'] = str(result)[2:-5]
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    os.remove(file_path)
+    results['Input'] = str(x) + ', ' + str(y)
+    results['Output'] = str(result)[2:-5]
+    return message, results
+
+
+def while_loop_challenge(script_string):
+    result = ""
+    file_path = "while_loop.sh"
+    create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
+
+    test_inputs = [(5, "54321"), (0, ""), (1, "1")]
+
+    for x, expected_output in test_inputs:
+        try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                results['Input'] = str(x) 
+                results['Output'] = str(result)[2:-5]
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    results['Input'] = str(x)
+    results['Output'] = str(result)[2:-5]
+    return message, results
+
+
+def for_loop_challenge(script_string):
+    result = ""
+    file_path = "for_loop.sh"
+    create_code_submission(file_path, script_string)
+    results = {'Input': '', 'Output': ''}
+
+    test_inputs = [(5, 2, "5432"), (1, 1, "1"), (2, 3, "")]
+
+    for x, y, expected_output in test_inputs:
+        try:
+            subprocess.call('dos2unix ' + file_path, shell=True)
+            result = subprocess.check_output(shlex.split('bash ' + file_path + ' ' + str(x) + ' ' + str(y)))
+            message = assess_call(result, expected_output)
+            if message == "Unfortunately, your script did not return the desired answer.":
+                results['Input'] = str(x) + ', ' + str(y)
+                results['Output'] = str(result)[2:-5]
+                break
+        except Exception as e:
+            print(e)
+            message = "Your scipt has returned a non-zero exit code. Did you forget to include #!/bin/bash at the beginning of the script?"
+    os.remove(file_path)
+    results['Input'] = str(x) + ', ' + str(y)
+    results['Output'] = str(result)[2:-5]
+    return message, results
+
 # the return value from check_output needs to be trimmed; this method trims it and ensures it matches with expected output
 def assess_call(input, expected_output):
     if str(input)[-5:] == "\\r\\n\'":
@@ -191,6 +267,12 @@ def assign_challenge(input, no):
             return division_challenge(input)
         case 7:
             return if_else_challenge(input)
+        case 8:
+            return concatanation_challenge(input)
+        case 9:
+            return while_loop_challenge(input)
+        case 10:
+            return for_loop_challenge(input)
 
 # create file with code submission that will later be called by check_output method
 def create_code_submission(file_path, file_contents):

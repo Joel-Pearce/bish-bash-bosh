@@ -47,13 +47,16 @@ class set_variable_challengeTests(TestCase):
 class multiplication_challengeTests(TestCase):
 
     def test_multiplication_challenge(self):
-        script_string = '#!/bin/bash\necho $(($1 * $2))'
+        script_string = '''#!/bin/bash
+                            echo $(($1 * $2))'''
         message = multiplication_challenge(script_string)
+        print(message)
         assert message == "Correct :)"
 
     def test_multiplication_challenge_incorrect_output(self):
         script_string = '#!/bin/bash\necho $(($1 ** $2))'
         message = multiplication_challenge(script_string)
+        print(message)
         assert message == "Unfortunately, your script did not return the desired answer."
 
     def test_multiplication_challenge_with_syntax_error(self):
