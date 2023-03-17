@@ -24,7 +24,7 @@
 
                 <br>
 
-                <p>{{ challenge.text }}</p>
+                <p>{{ challenge.text|linebreaksbr }}</p>
 
             </div>
 
@@ -92,11 +92,11 @@
 
         <div class="col">
 
-            <div class="card text-white bg-secondary mb-3" style="height: 7.5rem; width: 30rem;">
+            <div class="card text-white bg-secondary mb-3" style="min-height: 7.5rem; width: 30rem;">
                 <div class="card-body">
                     <h5 class="card-title">Where you went wrong</h5>
                     {% for key, value in results.items %}
-                    <p>{{key}} : {{ value }}</p>
+                    <p>{{ key }}: {{ value|linebreaks }}</p>
                     {% endfor %}
                   </div>
             </div>

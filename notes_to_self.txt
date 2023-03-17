@@ -1,0 +1,5 @@
+1. manually test all methods (X)
+2. fix automated tests for all methods
+3. add footer
+4. redesign home page
+
